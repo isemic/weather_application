@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #FFFFE0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+            max-width: 600px;
+            background:white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+        .weather-details {
+            margin-top: 20px;
+        }
+        .weather-details p {
+            font-size: 16px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Weather App</h1>
+        <form method="post" class="mb-4">
+            {% csrf_token %}
+            <div class="mb-3">
+                <input type="text" name="city" class="form-control" placeholder="Enter city" required>
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Get Weather</button>
+            </div>
+        </form>
+
+        {% if data %}
+            <div class="weather-details">
+                <h2>Weather Details</h2>
+                {% if data.error %}
+                    <div class="alert alert-danger" role="alert">
+                        Error: {{ data.error }}
+                    </div>
+                {% else %}
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <strong>Country Code:</strong> {{ data.country_code }}
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Coordinates:</strong> {{ data.coordinate }}
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Temperature:</strong> {{ data.temp }}
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Pressure:</strong> {{ data.pressure }}
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Humidity:</strong> {{ data.humidity }}
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Description:</strong> {{ data.description }}
+                        </li>
+                    </ul>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
